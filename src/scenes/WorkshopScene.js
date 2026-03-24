@@ -378,6 +378,11 @@ window.setSensitivity = (type, value) => {
         this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         this.renderer.setSize(width, height);
         
+        // 關鍵：限制像素比。iPhone 的像素比高達 3，會讓運算量變 9 倍。
+// 強制限制在 1.5 到 2 之間，畫面依然清楚但不會閃退。
+this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
+this.renderer.setSize(window.innerWidth, window.innerHeight);
+
         // --- 設定 DOM 元素 ---
         const threeCanvas = this.renderer.domElement;
         threeCanvas.id = 'three-canvas';
