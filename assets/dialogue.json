@@ -1,0 +1,696 @@
+{
+    
+    "start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_mountain",
+        "text": "【地點：荒山】\n七爺與八爺正在山上打獵...",
+        "face": null,
+        "effect": "rain_stop",
+        "next": "s2_1"
+    },
+    "s2_1": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "矮仔!那邊那邊！趕快ㄟ啦！",
+        "face": "xie騎馬",
+        "next": "s2_2"
+    },
+    "s2_2": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "在哪裡?在哪裡?我啥咪攏謀跨丟捏?",
+        "face": "fan騎馬",
+        "next": "s2_3"
+    },
+    "s2_3": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "沒才你眼睛這麼大顆！在那啦！看到就射下去啊！",
+        "face": "xie騎馬",
+        "next": "s2_4"
+    },
+    "s2_4": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "喔喔喔…嘿咻！(射箭)",
+        "face": "fan騎馬射箭",
+        "next": "s2_5"
+    },
+    "s2_5": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "吼…不是跟你說拉弓要拉滿嗎？這樣射出去的箭力頭沒夠，射到獵物就像蚊子在叮牛角，今天的晚餐又飛走了。",
+        "face": "xie騎馬哀",
+        "next": "s2_6"
+    },
+    "s2_6": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "欸?唉喔！長腳仔!那裡好像有東西喔！",
+        "face": "fan騎馬",
+        "next": "s2_7"
+    },
+    "s2_7": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "哈！看我ㄟ~嘿咻！(射箭)",
+        "face": "xie射箭",
+        "next": "s2_8"
+    },
+    "s2_8": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "中啊！中啊！真的中啊！一隻野兔。",
+        "face": "fan兔",
+        "effect": "flash",
+        "next": "s2_9"
+    },
+    "s2_9": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "哈哈哈這隻兔子看起來不錯!兔子毛拿給小鳳，然後再買一罈酒，晚餐吃烤野兔，配燒酒!想想就流口水...",
+        "face": "xie騎馬笑",
+        "next": "s2_10"
+    },
+    "s2_10": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "好哇好哇!說走就走，走！",
+        "face": "fan兔",
+        "next": "s3_start"
+    },
+
+    "s3_start": {
+        "type": "dialogue",
+        "bg": "bg_street",
+        "name": "旁白",
+        "text": "【地點：大街上】",
+        "face": null,
+        "next": "s3_1"
+    },
+    "s3_1": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "鄉親們搭給厚!來介紹下我這個老灰仔!大家都叫我福伯，說的我做杉的功夫呢~是上港有名聲，下港最出名的！城內的高官貴族，都指定要我做杉喔！嘿嘿嘿",
+        "face": "oldman笑",
+        "next": "s3_2"
+    },
+    "s3_2": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "福伯啊，我幫你帶酒來囉!",
+        "face": "fan酒",
+        "next": "s3_3"
+    },
+    "s3_3": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "你這個矮仔叢小聲一點啦!等一下被小鳳聽到又不給我喝...",
+        "face": "oldman噓",
+        "next": "s3_4"
+    },
+    "s3_4": {
+        "type": "dialogue",
+        "name": "鳳兒",
+        "text": "我聽到了喔^^你這個矮子叢范無忌！又買酒給我阿公喝!",
+        "face": "girl氣",
+        "next": "s3_5"
+    },
+    "s3_5": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "好啦小鳳別氣了，店內的兔子皮不是缺貨嗎?我們打到一隻野兔，這件兔子皮你看看可以嗎?",
+        "face": "xie",
+        "next": "s3_6"
+    },
+    "s3_6": {
+        "type": "dialogue",
+        "name": "鳳兒",
+        "text": "哇塞！這件兔子皮真水內。",
+        "face": "girl",
+        "next": "s3_7"
+    },
+    "s3_7": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "讚齁！妳看他兩人這麼辛苦，而且來都來了，酒都買了。我看吼！就小喝一下，當作慶祝啦啊哈哈哈哈！",
+        "face": "oldman笑",
+        "next": "s4_start"
+    },
+
+    "s4_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_room",
+        "text": "【地點：朱府豪宅】",
+        "face": null,
+        "next": "s4_1"
+    },
+    "s4_1": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "本公子！姓朱，名有財，就是真有財，真有錢啦！",
+        "face": "zhu錢",
+        "next": "s4_2"
+    },
+    "s4_2": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "大頭ㄟ！衣服給我準備一套趴力趴力ㄟ!但累穿好水水，來去大街上看小姑娘！",
+        "face": "zhu",
+        "next": "s4_3"
+    },
+    "s4_3": {
+        "type": "dialogue",
+        "name": "大頭",
+        "text": "公子阿！你的水衣服都拿去送洗阿內！",
+        "face": "datou",
+        "next": "s4_4"
+    },
+    "s4_4": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "啥咪!?難道你要我要穿這睡衣出門喔?",
+        "face": "zhu",
+        "next": "s4_5"
+    },
+    "s4_5": {
+        "type": "dialogue",
+        "name": "大頭",
+        "text": "沒有喇!公子阿！我聽說城內有一個福伯啊，做衣服非常厲害，我們馬上來去做幾件啊！",
+        "face": "datou",
+        "next": "s5_start"
+    },
+
+    "s5_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_street",
+        "text": "【地點：大街上】\n朱公子與大頭強勢進入福伯的店內...",
+        "face": null,
+        "next": "s5_1"
+    },
+    "s5_1": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "現在給我量一量，馬上嘎我做一件趴力趴力ㄟ西裝！",
+        "face": "zhu",
+        "next": "s5_2"
+    },
+    "s5_2": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "馬上訂做要穿? 哪有可能啦！我訂單很多，今天還有很多人要拿杉呢。",
+        "face": "oldman嚇",
+        "next": "s5_3"
+    },
+    "s5_3": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "以我朱府的勢力，是沒面子插單是謀？  大頭ㄟ！馬上給我叫人，給我翻店！",
+        "face": "zhu賤",
+        "next": "s5_4"
+    },
+    "s5_4": {
+        "type": "dialogue",
+        "name": "鳳兒",
+        "text": "現在是怎樣？ 誰在這裡大小聲?",
+        "face": "girl生氣",
+        "next": "s5_5"
+    },
+    "s5_5": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "喔喔喔！ 大頭ㄟ…夭壽水內！",
+        "face": "zhu色",
+        "next": "s5_6"
+    },
+    "s5_6": {
+        "type": "dialogue",
+        "name": "鳳兒",
+        "text": "如果朱公子需要馬上有杉，我幫朱公子量身體比例，馬上幫你挑一件現成的，可以嗎?",
+        "face": "girl",
+        "next": "s5_7"
+    },
+    "s5_7": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "可以！可以！妳說的都嘛可以~ (轉頭問福伯) 欸欸，這位水姑娘是你請的小姐喔?",
+        "face": "zhu色",
+        "next": "s5_8"
+    },
+    "s5_8": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "這是我自己的查母孫啦！",
+        "face": "oldman",
+        "next": "s5_9"
+    },
+    "s5_9": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "哇嗚~本公子看了非常尬意，準備要娶你查母孫做我第13房小妾啦! 那就三天後，本公子會過來迎娶喔！",
+        "face": "zhu",
+        "next": "s5_10"
+    },
+    "s5_10": {
+        "type": "dialogue",
+        "name": "鳳兒",
+        "text": "啥咪！那個朱有財要娶我做妾?",
+        "effect": ["flash","thunder"],
+        "face": "girl嚇",
+        "next": "s5_11"
+    },
+    "s5_11": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "阿娘喂這個夭壽骨的朱阿有財，仗靠他老爸做大官，這下下去我看查母孫保證壞了了ㄟ！",
+        "face": "oldman嚇",
+        "next": "s9_start"
+    },
+
+    "s9_start": {
+        "type": "dialogue",
+        "bg": "bg_mansion",
+        "name": "旁白",
+        "text": "【地點：荒山】\n三天後，朱公子發現福伯放空城，憤而帶人追到山上",
+        "face": null,
+        "next": "s9_1"
+    },
+    "s9_1": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "三天前我是怎樣跟你說的，敢給我放空管！來人啊，鳳兒給我抓起來！",
+        "face": "zhu生氣",
+        "next": "s9_2"
+    },
+    "s9_2": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "賣啦！朱公子阿，別給我溫查某孫帶走啦！(抱住朱公子的大腿)",
+        "face": "oldman怕",
+        "next": "s9_3"
+    },
+    "s9_3": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "死老灰ㄚ死不放走，來人阿給我打！",
+        "effect":["thunder","flash"],
+        "face": "zhu賤",
+        "next": "s9_4"
+    },
+    "s9_4": {
+        "type": "dialogue",
+        "name": "旁白",
+        "text": "眾人一擁而上，福伯被打得奄奄一息...",
+        "effect":["thunder", "flash"],
+        "face": "oldman怕",
+        "next": "s9_5D"
+    },
+    
+    "s9_5D": {
+        "type": "dialogue",
+        "name": "福伯",
+        "text": "...",
+        "face": "oldman死",
+        "next": "s9_5"
+    },
+
+    "s9_5": {
+        "type": "dialogue",
+        "name": "大頭",
+        "text": "公子阿，靠杯ㄚ人好像被我們打死阿內?",
+        "face": "datou",
+        "next": "s9_6"
+    },
+    
+    
+    "s9_6": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "打死就打死阿！擋我娶查母就是死罪！",
+        "face": "zhu賤",
+        "next": "s9_7"
+    },
+    "s9_7": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "稍微等ㄟ！... 豬哥財！你竟敢打死阿福伯！",
+        "effect":"thunder",
+        "face": "fan拳",
+        "next": "s9_8"
+    },
+    "s9_8": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "我跟你說喔，你最好別給我管閒事，阿那沒我連你們兩個都打喔！",
+        "face": "zhu",
+        "next": "choice_fight"
+    },
+
+    "choice_fight": {
+        "type": "choice",
+        "text": "(朱公子態度囂張，眼看就要動手...)",
+        "options": [
+            { "label": "給他一拳！", "next": "route_punch" },
+            { "label": "再想想...", "next": "route_hesitate" }
+        ]
+    },
+
+    "route_hesitate": {
+        "type": "dialogue",
+        "name": "結局",
+        "text": "你猶豫了... 朱公子的人馬一擁而上，將你們全部抓回了官府。\n【Bad End：含冤莫白】",
+        "face": null,
+        "next": "back"
+    },
+
+    "back": {
+        "type": "choice",
+        "text": "想改變結局嗎?",
+        "options": [
+            { "label": "要改變結局!", "next": "s9_7" },
+            { "label": "不了吧(退出)", "next": "start" }
+        ]
+    },
+
+    "route_punch": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "打！你真正賊咖惡人ㄟ！賣勘人贏！給你去~ (揮拳)",
+        "effect":["thunder","flash"],
+        "face": "fan出拳",
+        "next": "s9_dead"
+    },
+    "s9_dead": {
+        "type": "dialogue",
+        "name": "朱公子",
+        "text": "ㄚ！！！ (朱公子倒地身亡)",
+        "effect":["thunder","flash"],
+        "face": "zhu死",
+        "next": "s9_aftermath"
+    },
+    "s9_aftermath": {
+        "type": "dialogue",
+        "name": "大頭",
+        "text": "哇！公子阿死翹翹ㄚ！你兩人死定了，大家趕快回去報告朱老爺！",
+        "effect":"thunder",
+        "face": "datou",
+        "next": "s9_scare"
+    },
+    "s9_scare": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "矮仔，你太衝動了...現在朱太守一定會封鎖城門。",
+        "face": "xie緊張",
+        "next": "s9_sorry"
+    },
+    "s9_sorry": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "歹勢啦，真的太生氣了...",
+        "face": "fan小哀",
+        "next": "s9_plan"
+    },
+    "s9_plan": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "算了，我們現在必須想辦法逃出去。",
+        "face": "xie思考",
+        "next": "s9_plan_2"
+    },
+    "s9_plan_2": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "現在六月天，鳳梨盛產，我們躲在運水果的車內混出城！",
+        "face": "xie燈泡",
+        "next": "s10_start"
+    },
+
+    "s10_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_street",
+        "text": "【地點：大街上】\n太守震怒，下令全城搜捕...",
+        "face": null,
+        "next": "s10_1"
+    },
+    "s10_1": {
+        "type": "dialogue",
+        "name": "太守",
+        "text": "竟敢打死我兒！就算把整個城翻過來，也要給我找出這三個人！",
+        "effect":"thunder",
+        "face": "taishou",
+        "next": "s11_start"
+    },
+
+    "s11_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_street",
+        "text": "【地點：大街上】",
+        "face": null,
+        "next": "s11_1"
+    },
+    "s11_1": {
+        "type": "dialogue",
+        "name": "春嬸",
+        "text": "半夜3點時候我會把水果運出去城外，那時候走剛剛好！",
+        "face": "aunt",
+        "next": "s11_2"
+    },
+    "s11_2": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "分頭進行，小鳳去準備衣物，我跟矮仔幫春嬸搬貨。半夜2點在城中湖橋下集合！",
+        "face": "xie",
+        "next": "s12_start"
+    },
+
+    "s12_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_streetN",
+        "text": "【地點：深夜大街】\n突然下起傾盆大雨...",
+        "effect": ["rain_start", "shake"],
+        "face": null,
+        "next": "s12_1"
+    },
+    "s12_1": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "哇！雨這麼大！大哥叫我先去橋下等小鳳，互相照應。好，來去橋下等！",
+        "face": "fan手胸前",
+        "next": "s12_2"
+    },
+    "s12_2": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "(與春嬸在一起) 這雨好像颱風一樣！我怕那個矮仔笨笨的會一直在橋下等...我必須去通知他！",
+        "face": "xie哀",
+        "next": "s13_start"
+    },
+
+    "s13_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "text": "【地點：大街上】\n七爺在趕往橋下的途中遇到了官兵...",
+        "face": null,
+        "next": "s13_1"
+    },
+    "s13_1": {
+        "type": "dialogue",
+        "name": "大頭",
+        "text": "遇到阿吼！長腳仔你要跑去哪裡！給我抓起來！",
+        "face": "datou",
+        "next": "s13_2"
+    },
+    "s13_2": {
+        "type": "dialogue",
+        "name": "村民",
+        "text": "淹水阿！上游淹水阿啦！",
+        "effect": ["rain_start", "thunder", "shake"],
+        "face": "villager",
+        "next": "s13_3"
+    },
+    "s13_3": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "大頭哥！拜託給我一點時間，我小弟在橋下，水暴漲他會死在那裡！",
+        "effect": ["rain_start", "thunder", "shake"],
+        "face": "xie擔心",
+        "next": "s13_4"
+    },
+    "s13_4": {
+        "type": "dialogue",
+        "name": "大頭",
+        "text": "誰人會這麼笨，淹水還不跑？我看你是要騙我逃走，帶走！",
+        "face": "datou",
+        "next": "s14_start"
+    },
+
+    "s14_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_bridge",
+        "text": "【地點：橋下 (大雨)】",
+        "face": null,
+        "next": "s14_1"
+    },
+    "s14_1": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "水開始淹起來ㄚ... 但大哥說要在這等... 君子願抱橋而死，也不願失信而歸！",
+        "face": "fan",
+        "effect": ["rain_start", "thunder", "shake"],
+        "next": "s14_2"
+    },
+    "s14_2": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "(遠方被抓住) 小弟阿！！！",
+        "effect": "flash",
+        "face": "xie頭痛眼暈",
+        "next": "s14_3"
+    },
+    "s14_3": {
+        "type": "dialogue",
+        "name": "旁白",
+        "text": "八爺最終被洪水淹沒...",
+        "effect": "rain_start", 
+        "face": null,
+        "next": "s15_start"
+    },
+
+    "s15_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_street",
+        "text": "【地點：隔日大街】",
+        "effect": "rain_stop",
+        "face": null,
+        "next": "s15_1"
+    },
+    "s15_1": {
+        "type": "dialogue",
+        "name": "官差",
+        "text": "謝大哥你快走！我知道你是好人，是被朱有財逼的。我放你走！",
+        "face": "officer",
+        "next": "s16_start"
+    },
+
+    "s16_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_bridgeM",
+        "text": "【地點：橋下】\n洪水退去，七爺來到約定地點...",
+        "face": null,
+        "next": "s16_1"
+    },
+    "s16_1": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "小弟... 你怎麼這麼笨... 是大哥害死你...",
+        "face": "xie哭",
+        "next": "s16_2"
+    },
+    "s16_2": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "小弟你等我，大哥馬上去陪你！(上吊自盡)",
+        "face": "xie哭覺悟",
+        "next": "s17_start"
+    },
+
+    "s17_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_street",
+        "text": "【地點：大街上】\n鳳兒得知噩耗，決定孤注一擲...",
+        "face": null,
+        "next": "s17_1"
+    },
+    "s17_1": {
+        "type": "dialogue",
+        "name": "鳳兒",
+        "text": "春嬸，聽說明天朝廷欽差大臣要來，我要去告御狀！",
+        "face": "girl生氣",
+        "next": "s18_start"
+    },
+
+    "s18_start": {
+        "type": "dialogue",
+        "name": "旁白",
+        "text": "【地點：城門口】",
+        "face": null,
+        "next": "s18_1"
+    },
+    "s18_1": {
+        "type": "dialogue",
+        "name": "鳳兒",
+        "text": "欽差大人，冤枉ㄚ！朱太守縱子行兇，害死我阿公與兩位義士！",
+        "face": "girl氣哭",
+        "next": "s18_2"
+    },
+    "s18_2": {
+        "type": "dialogue",
+        "name": "太守",
+        "text": "一派胡言！明明是他們合夥打死我兒！",
+        "face": "taishou",
+        "next": "s18_3"
+    },
+    "s18_3": {
+        "type": "dialogue",
+        "name": "旁白",
+        "text": "(突然天空降下六月雪)",
+        "effect": "snow_start",
+        "face": null,
+        "next": "s18_4"
+    },
+    "s18_4": {
+        "type": "dialogue",
+        "name": "官差",
+        "text": "六月飛霜，必有冤屈！來人，徹查李太守！",
+        "face": "officer",
+        "next": "end_reunion"
+    },
+
+    "end_reunion": {
+        "type": "dialogue",
+        "name": "旁白",
+        "bg": "bg_mountain",
+        "text": "【結局】\n七爺八爺死後被封為神將。小鳳彷彿看見了他們的靈魂...",
+        "face": null,
+        "effect": "snow_stop",
+        "next": "end_1"
+    },
+    "end_1": {
+        "type": "dialogue",
+        "name": "七爺謝必安",
+        "text": "小鳳！辛苦了，走吧！",
+        "face": "xie死後",
+        "next": "end_2"
+    },
+    "end_2": {
+        "type": "dialogue",
+        "name": "八爺范無咎",
+        "text": "跟好！別不見了！",
+        "face": "fan死後",
+        "next": "end_3"
+    },
+    "end_3": {
+        "type": "dialogue",
+        "name": "小鳳",
+        "text": "恩！小鳳這次一定嘎你們牽好，不會再放手...",
+        "face": "girl",
+        "next": "end_finish"
+    },
+    "end_finish": {
+        "type": "dialogue",
+        "name": "系統",
+        "text": "--- 全劇終 ---",
+        "face": null,
+        "next": "start"
+    }
+}
