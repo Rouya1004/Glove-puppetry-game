@@ -12,158 +12,121 @@ export default class WorkshopScene extends Phaser.Scene {
             Hand_R: "01"
         };
         this.isControlling = true;
+        this.settings = {
+        rotationSensitivity: 3.0,  // 轉身靈敏度
+        moveSensitivity: 15.0      // 位移靈敏度
+    };
     }
 
     create() {
-    // 1. 強制將 Phaser UI 拉到最上層 (您的原代碼)
-    const phaserCanvas = this.game.canvas;
-    const threeCanvas = document.getElementById('three-canvas');
-    if (phaserCanvas) {
-        phaserCanvas.style.zIndex = "10";
-        phaserCanvas.style.position = "absolute";
-    }
-    if (threeCanvas) {
-        threeCanvas.style.zIndex = "1";
-    }
 
-    this.createSystemMenu();
-    this.cameras.main.setBackgroundColor('rgba(0,0,0,0)');
+        // --- 【新增】 強制將 Phaser UI 拉到最上層 ---
+        // 這樣齒輪和選單才會顯示在戲偶前面，而且可以被點擊
+        const phaserCanvas = this.game.canvas;
+        const threeCanvas = document.getElementById('three-canvas');
 
-    // 2. 初始化 3D 環境
-    this.init3D();
+        if (phaserCanvas) {
+            phaserCanvas.style.zIndex = "10"; // 設高一點，確保在最上面
+            phaserCanvas.style.position = "absolute"; // 確保定位正確
+        }
+        if (threeCanvas) {
+            threeCanvas.style.zIndex = "1"; // 設低一點，放在背景
+        }
 
-    // 3. 載入模型 (省略部分載入邏輯...)
-    const loader = new GLTFLoader();
-    loader.load('assets/puppet.glb', (gltf) => {
-        this.puppet = gltf.scene;
-        this.puppet.scale.set(12, 12, 12);
-        this.puppet.position.set(0, -62, 0);
-        this.puppet.rotation.y = -Math.PI / 2;
-        this.scene3D.add(this.puppet);
-        this.refreshPuppetAppearance();
+        this.createSystemMenu();
 
-        // 在 create() 函式內
-window.changePart = (partName, partID) => {
-    console.log(`更換部件: ${partName} 為 ${partID}`);
+        // 背景透明
+        this.cameras.main.setBackgroundColor('rgba(0,0,0,0)');
+
     
-    // 1. 更新資料
-    if (this.currentParts) {
-        this.currentParts[partName] = partID;
-    }
-    
-    // 2. 執行換裝
-    this.updatePuppetVisuals(partName, partID);
-};
-    });
 
-    // 4. 建立「啟動按鈕」(解決行動端權限必備)
-    const startBtn = this.add.text(400, 300, '【 點擊啟動 AR 操偶 】', {
-        fontSize: '32px',
-        backgroundColor: '#ba1f1f',
-        padding: { x: 20, y: 10 },
-        color: '#ffffff',
-        fontFamily: 'Microsoft JhengHei'
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true }).setDepth(500);
+        // 1. 初始化 3D 環境
+        this.init3D();
 
-    startBtn.on('pointerdown', async () => {
-        startBtn.setText('讀取中...');
-        await this.startARSystem(); // 點擊後一次啟動所有系統
-        startBtn.destroy();
-    });
+        // 2. 載入模型
+        const loader = new GLTFLoader();
+        loader.load('assets/puppet.glb', (gltf) => {
+            this.puppet = gltf.scene;
+            this.puppet.scale.set(12, 12, 12);
+            this.puppet.position.set(0, -62, 0);
+            this.puppet.rotation.y = -Math.PI / 2;
 
-    // 綁定儲存按鈕等 (原邏輯)
-    window.changePart = (category, id) => this.changePart(category, id);
-}
+            this.scene3D.add(this.puppet);
 
-async startARSystem() {
-    const videoElement = document.querySelector('.input_video');
-    if (!videoElement) return;
+            // 初始化顯示部位
+            this.refreshPuppetAppearance();
+            console.log("戲偶載入完成");
 
-    try {
-        this.hands = new Hands({
-            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-        });
-
-        this.hands.setOptions({
-            maxNumHands: 1,
-            modelComplexity: 0,
-            minDetectionConfidence: 0.5,
-            minTrackingConfidence: 0.5
-        });
-
-        this.hands.onResults((results) => {
-            if (this.isControlling && results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-                this.updatePuppet(results.multiHandLandmarks[0]);
-            }
-        });
-
-        this.camera = new Camera(videoElement, {
-            onFrame: async () => {
-                if (this.hands) {
-                    await this.hands.send({ image: videoElement });
-                }
-            },
-            width: 640,
-            height: 480
-        });
-
-       // 在 startARSystem() 裡面的成功回饋處
-await this.camera.start();
-this.isControlling = true;
-
-// 強制顯示鏡頭畫面並確保它在最底層
-const videoElement = document.querySelector('.input_video');
-if (videoElement) {
-    videoElement.style.display = 'block';
-    videoElement.style.position = 'absolute';
-    videoElement.style.top = '0';
-    videoElement.style.left = '0';
-    videoElement.style.width = '100%';
-    videoElement.style.height = '100%';
-    videoElement.style.zIndex = '-1'; // 放最底層，才不會擋住 3D 戲偶
-    videoElement.style.objectFit = 'cover';
-}
-}
-
-loadPuppetParts() {
-    const loader = new GLTFLoader();
-    const SMOOTH_SPEED = 0.2;
-
-    // 定義要更換的部位與對應的模型群組
-    const partsToLoad = [
-        { name: 'Head', group: 'headGroup' },
-        { name: 'Body', group: 'bodyGroup' },
-        { name: 'Hand_L', group: 'handL' },
-        { name: 'Hand_R', group: 'handR' }
-    ];
-
-    partsToLoad.forEach(part => {
-        const partID = this.currentParts[part.name];
-        // 假設您的路徑結構是 assets/models/Head_01.glb
-        const modelPath = `assets/models/${part.name}_${partID}.glb`;
-
-        loader.load(modelPath, (gltf) => {
-            // 1. 如果原本已經有該部位，先從 puppet 中移除
-            if (this[part.group]) {
-                this.puppet.remove(this[part.group]);
-            }
-
-            // 2. 取得新模型並設定
-            const newModel = gltf.scene;
-            
-            // 3. 將新模型賦值給對應的變數 (如 this.headGroup)
-            this[part.group] = newModel;
-
-            // 4. 加回 puppet 容器中
-            this.puppet.add(newModel);
-
-            console.log(`${part.name} 已更換為 ID: ${partID}`);
         }, undefined, (error) => {
-            console.error(`${part.name} 載入失敗，路徑可能錯誤: ${modelPath}`, error);
+            console.error('模型載入失敗:', error);
         });
-    });
-}
 
+        // 3. 連結 HTML UI (開啟按鈕)
+        const uiDiv = document.getElementById('workshop-ui');
+        const video = document.querySelector('.input_video');
+        
+        if (uiDiv) uiDiv.style.display = 'block';
+        if (video) video.style.display = 'block';
+
+        // 綁定 HTML 全域函式 (讓 onclick="changePart(...)" 運作)
+        window.changePart = (category, id) => this.changePart(category, id);
+
+        // 綁定「開啟換裝」按鈕
+        const btnOpen = document.getElementById('btn-open-workshop');
+        if (btnOpen) {
+            btnOpen.onclick = () => this.enterCustomizeMode();
+        }
+
+        // 綁定「儲存」按鈕
+        const btnSave = document.getElementById('btn-save');
+        if (btnSave) {
+            btnSave.onclick = () => this.saveAndResume();
+        }
+
+        // 啟動 MediaPipe
+        this.setupMediaPipe();
+
+        this.events.on('shutdown', () => {
+            if (uiDiv) uiDiv.style.display = 'none';
+            if (video) video.style.display = 'none';
+            if (this.camera) this.camera.stop();
+            // 清理 ThreeJS 相關...
+        });
+        window.setSensitivity = (type, value) => {
+    this.settings[type] = parseFloat(value);
+    console.log(`更新靈敏度 ${type}: ${value}`);
+};
+// 建立預設靈敏度物件
+this.puppetSettings = {
+    rotationSensitivity: 3.0,
+    moveSensitivity: 15.0
+};
+this.puppetSettings = {
+    rotationSensitivity: 3.0,
+    moveSensitivity: 15.0,
+    armSensitivity: 1.5  // 🔥 新增：手臂靈敏度預設值
+};
+
+// 讓 HTML 滑桿可以更新這個數值
+window.setSensitivity = (type, value) => {
+    this.puppetSettings[type] = parseFloat(value);
+};
+        // 1. 環境光：提供基礎亮度 (維持現狀)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    this.scene3D.add(ambientLight);
+
+    // 2. 主光源 (定向光)：模擬陽光或舞台燈，產生立體感
+    const sunLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    sunLight.position.set(5, 0, 7); 
+    this.scene3D.add(sunLight);
+
+    // 3. 補光：從另一側給予微弱光線，避免陰影處全黑
+    const fillLight = new THREE.PointLight(0xffaa88, 0.4);
+    fillLight.position.set(-5, 0, 5);
+    this.scene3D.add(fillLight);
+    }
+    
+    
 
     // ============================================================
     //  精緻版系統選單 (移植到工作坊)
@@ -466,38 +429,56 @@ loadPuppetParts() {
         });
     }
 
-  updatePuppetVisuals(partName, partID) {
-    const loader = new GLTFLoader();
-    // 根據您的 index.html，路徑格式應該是 assets/models/Head_01.glb
-    // 注意：partName 可能是 'Head', 'Body', 'Hand_L', 'Hand_R'
-    const modelPath = `assets/models/${partName}_${partID}.glb`;
-
-    loader.load(modelPath, (gltf) => {
-        const newPart = gltf.scene;
-        
-        // 根據部位決定替換哪個變數
-        if (partName === 'Head') {
-            if (this.headGroup) this.puppet.remove(this.headGroup);
-            this.headGroup = newPart;
-            this.puppet.add(this.headGroup);
-        } else if (partName === 'Body') {
-            if (this.bodyGroup) this.puppet.remove(this.bodyGroup);
-            this.bodyGroup = newPart;
-            this.puppet.add(this.bodyGroup);
-        } else if (partName.includes('Hand')) {
-            // 如果是手部，根據 L 或 R 替換
-            const side = partName.split('_')[1]; // L 或 R
-            const target = side === 'L' ? 'handL' : 'handR';
-            if (this[target]) this.puppet.remove(this[target]);
-            this[target] = newPart;
-            this.puppet.add(this[target]);
+    // ==========================================
+    //  MediaPipe 手勢追蹤
+    // ==========================================
+    setupMediaPipe() {
+        const videoElement = document.querySelector('.input_video');
+        if (videoElement) {
+    // 🔥 行動裝置啟動鏡頭的關鍵：必須 playsinline 且 muted
+    videoElement.setAttribute('autoplay', '');
+    videoElement.setAttribute('muted', '');
+    videoElement.setAttribute('playsinline', '');
+    
+    // 確保鏡頭在最底層，不會遮擋 3D 戲偶
+    videoElement.style.display = 'block';
+    videoElement.style.position = 'absolute';
+    videoElement.style.top = '0';
+    videoElement.style.left = '0';
+    videoElement.style.width = '100%';
+    videoElement.style.height = '100%';
+    videoElement.style.objectFit = 'cover';
+    videoElement.style.zIndex = '0'; // 放在最底
         }
-        
-        console.log(`${partName} 更換成功！`);
-    }, undefined, (err) => {
-        console.error("模型載入失敗，請檢查路徑:", modelPath);
-    });
-}
+
+        const hands = new Hands({locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+        }});
+
+        hands.setOptions({
+            maxNumHands: 1,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+
+        hands.onResults((results) => {
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                this.updatePuppet(results.multiHandLandmarks[0]);
+            }
+        });
+
+        this.camera = new Camera(videoElement, {
+            onFrame: async () => {
+                await hands.send({image: videoElement});
+            },
+            width: 1280,
+            height: 720
+        });
+
+        this.camera.start();
+        this.isControlling = true;
+    }
 
     updatePuppet(landmarks) {
         if (!this.puppet || !this.isControlling) return;
@@ -532,12 +513,12 @@ loadPuppetParts() {
         // ============================================
         // 2. 身體位移 & 旋轉 (改為：手勢方向控制旋轉)
         // ============================================
-        const BODY_MOVE_SENSITIVITY = 15.0; 
+        const BODY_MOVE_SENSITIVITY = this.puppetSettings.moveSensitivity; 
         const palmX = (wrist.x + midRoot.x) / 2;
         const palmY = (wrist.y + midRoot.y) / 2;
 
         // A. 位移 (身體還是會跟著手的位置走，但不會轉身)
-        let targetPuppetX = (palmX - 0.5) * -BODY_MOVE_SENSITIVITY; 
+        let targetPuppetX = (palmX - 0.5) * -this.settings.moveSensitivity;
         let targetPuppetY = (palmY - 0.5) * -BODY_MOVE_SENSITIVITY; 
         targetPuppetY += -0.5;
 
@@ -553,7 +534,7 @@ loadPuppetParts() {
         // 手指向左歪 -> 差值為負 -> 向左轉
         // 手指向右歪 -> 差值為正 -> 向右轉
         
-        const ROTATION_SENSITIVITY = 3.0; // 轉身靈敏度
+        const ROTATION_SENSITIVITY = this.puppetSettings.moveSensitivity; // 轉身靈敏度
         
         // 計算傾斜量 (Tip.x - Wrist.x)
         // 我們用這隻「主要控制手」(通常是畫面左邊那隻，也就是你的右手) 來判斷
@@ -564,7 +545,7 @@ loadPuppetParts() {
 
         // 基礎角度 -Math.PI/2 (因為模型預設側身) + 傾斜量 * 靈敏度
         // 注意：如果發現轉的方向反了，把 + 改成 -
-        let targetBodyRotY = -Math.PI / 2 - (leanX * ROTATION_SENSITIVITY);
+        let targetBodyRotY = -Math.PI / 2 - (leanX * this.settings.rotationSensitivity);
         
         // 限制角度 (不要讓頭轉到背後)
         targetBodyRotY = Phaser.Math.Clamp(targetBodyRotY, -Math.PI/2 - 1.2, -Math.PI/2 + 1.2);
@@ -625,20 +606,31 @@ loadPuppetParts() {
             targetL_Y = clapAngle;  
             targetL_Z = 0;
             
-        } else {
+       } else {
             // --- 🦅 開合跳 ---
+            
+            // 🔥 修正 1：定義 middleFingerMCP (使用 landmarks[9]，這是中指根部)
+            const middleFingerMCP = landmarks[9]; 
+            let leanY = middleFingerMCP.y - 0.5; // 計算前後傾斜量
+
             let rawHeightR = fingerOnScreenLeft.y; 
             let rawHeightL = fingerOnScreenRight.y;
 
+            // 🔥 修正 2：確保從 this.puppetSettings 讀取連動強度
+            let armRange = this.puppetSettings.armSensitivity; 
+            let leanLinkage = this.puppetSettings.leanLinkage || 0.5; // 如果沒設就預設 0.5
+
             // 右手
-            let angleR = THREE.MathUtils.mapLinear(rawHeightR, 1.0, 0.0, -1.5, 1.5);
-            targetR_X = angleR; 
+            let angleR = THREE.MathUtils.mapLinear(rawHeightR, 1.0, 0.0, -armRange, armRange);
+            // 讓 X 軸旋轉受到 手部高度 與 身體前後傾(leanY) 的共同影響
+            targetR_X = angleR + (leanY * leanLinkage); 
             targetR_Z = 0;     
             targetR_Y = 0; 
 
             // 左手
-            let angleL = THREE.MathUtils.mapLinear(rawHeightL, 1.0, 0.0, -1.5, 1.5);
-            targetL_X = -angleL; // 修正：左手跟右手鏡像，通常數值正負相同或相反視模型而定，目前先設正
+            let angleL = THREE.MathUtils.mapLinear(rawHeightL, 1.0, 0.0, -armRange, armRange);
+            // 讓左手同步連動
+            targetL_X = -angleL + (leanY * leanLinkage); 
             targetL_Z = 0;
             targetL_Y = 0;
         }
