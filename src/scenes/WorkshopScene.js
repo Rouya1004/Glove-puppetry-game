@@ -1,4 +1,8 @@
+
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
+// 1. 新增 Draco 解壓器引入
+import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/DRACOLoader.js';
+
 
 export default class WorkshopScene extends Phaser.Scene {
     constructor() {
@@ -370,64 +374,83 @@ window.setSensitivity = (type, value) => {
     //  3D 初始化
     // ==========================================
     init3D() {
-        // --- 1. 使用「視窗大小」而非遊戲大小 ---
-        // 這樣確保 3D 畫布的中心點 = 螢幕中心點 = 遊戲介面中心點
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-        this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        this.renderer.setSize(width, height);
-        
-        // --- 設定 DOM 元素 ---
-        const threeCanvas = this.renderer.domElement;
-        threeCanvas.id = 'three-canvas';
-        
-        // --- 關鍵 CSS 設定 ---
-        // 使用 fixed 讓它永遠覆蓋整個視窗背景
-        threeCanvas.style.position = 'fixed'; 
-        threeCanvas.style.top = '0';
-        threeCanvas.style.left = '0';
-        threeCanvas.style.zIndex = '1'; // 背景層
-        threeCanvas.style.pointerEvents = 'none'; // 讓滑鼠點擊穿透
-        threeCanvas.style.display = 'block';
+    // --- 效能優化：針對手機調整抗鋸齒 ---
+    // 手機螢幕密度高，其實可以關閉 antialias 來省電、省記憶體
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    this.renderer = new THREE.WebGLRenderer({ 
+        alpha: true, 
+        antialias: !isMobile, // 手機關閉抗鋸齒，減少 GPU 負擔
+        powerPreference: "high-performance" // 請求高效能模式
+    });
+    
+    this.renderer.setPixelRatio(window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio); // 限制像素密度，防止 4K 螢幕卡死
+    this.renderer.setSize(width, height);
+    
+    const threeCanvas = this.renderer.domElement;
+    threeCanvas.id = 'three-canvas';
+    threeCanvas.style.position = 'fixed'; 
+    threeCanvas.style.top = '0';
+    threeCanvas.style.left = '0';
+    threeCanvas.style.zIndex = '1'; 
+    threeCanvas.style.pointerEvents = 'none'; 
+    threeCanvas.style.display = 'block';
 
-        // --- 設定 Phaser 介面層級 ---
-        if (this.game.canvas) {
-            this.game.canvas.style.position = 'absolute';
-            this.game.canvas.style.zIndex = '10'; // 前景層
-        }
-
-        // --- 加入網頁 ---
-        // 先移除舊的 (避免重複)
-        const oldCanvas = document.getElementById('three-canvas');
-        if (oldCanvas) oldCanvas.remove();
-
-        document.body.appendChild(threeCanvas);
-
-        // --- 建立場景與攝影機 ---
-        this.scene3D = new THREE.Scene();
-
-        // 攝影機 Aspect Ratio 也要用視窗長寬比
-        this.camera3D = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-        this.camera3D.position.set(0, 0, 20);
-        
-        // 燈光
-        this.scene3D.add(new THREE.AmbientLight(0xffffff, 0.8));
-        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-        dirLight.position.set(2, 2, 2);
-        this.scene3D.add(dirLight);
-
-        // --- 【額外加分】 監聽視窗縮放 ---
-        // 如果玩家改變視窗大小，3D 畫布也要跟著變，不然會變形
-        window.addEventListener('resize', () => {
-            if (!this.renderer) return;
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            this.renderer.setSize(w, h);
-            this.camera3D.aspect = w / h;
-            this.camera3D.updateProjectionMatrix();
-        });
+    if (this.game.canvas) {
+        this.game.canvas.style.position = 'absolute';
+        this.game.canvas.style.zIndex = '10'; 
     }
+
+    const oldCanvas = document.getElementById('three-canvas');
+    if (oldCanvas) oldCanvas.remove();
+    document.body.appendChild(threeCanvas);
+
+    this.scene3D = new THREE.Scene();
+    this.camera3D = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    this.camera3D.position.set(0, 0, 20);
+    
+    this.scene3D.add(new THREE.AmbientLight(0xffffff, 0.8));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(2, 2, 2);
+    this.scene3D.add(dirLight);
+
+    // --- 2. 關鍵修正：設定 Draco 解壓路徑 ---
+    // 這是讓手機不再閃退的核心，如果不加這個，讀取 Draco 模型會導致瀏覽器卡死
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/'); 
+
+    // --- 3. 載入模型邏輯 ---
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader); // 告訴 Loader 如何解壓模型
+
+    // 顯示載入中（建議你在 UI 加上 Loading 文字）
+    console.log("開始載入模型...");
+    loader.load('assets/puppet-v2.glb', (gltf) => {
+        this.puppet = gltf.scene;
+        this.scene3D.add(this.puppet);
+        console.log("模型載入完成！");
+        
+        // 釋放解壓器記憶體 (優化手機資源)
+        dracoLoader.dispose(); 
+    }, 
+    (xhr) => {
+        // 可以在這裡算百分比 (xhr.loaded / xhr.total * 100)
+    },
+    (error) => {
+        console.error("載入模型失敗:", error);
+    });
+
+    window.addEventListener('resize', () => {
+        if (!this.renderer) return;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        this.renderer.setSize(w, h);
+        this.camera3D.aspect = w / h;
+        this.camera3D.updateProjectionMatrix();
+    });
+}
 
     // ==========================================
     //  MediaPipe 手勢追蹤
